@@ -20,6 +20,7 @@
     <head>
         <link href="css/bootstrap.min_1.css" rel="stylesheet" type="text/css"/>
         <link href="css/tableexport.min.css" rel="stylesheet" type="text/css"/>
+        <title>Sachin Enterprise</title>
     </head>
 <body>  
 <h2 style="text-align: center;"><?php echo $_POST["name"]  ?> </h2>  

@@ -22,7 +22,7 @@
 ?>
 <html>
 <head>
-	<title>Custmer History</title>
+	<title>Sachin Enterprise</title>
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
 </head>

@@ -33,6 +33,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">  
+        <title>Sachin Enterprise</title>
     </head>
     <body>
         <table width="50%" class="table table-bordered">

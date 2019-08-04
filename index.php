@@ -29,6 +29,7 @@
         .sub{
                 float:right;
                 width:70%;
+                margin-right: -25px;
                 
         }
 </style>
@@ -49,6 +50,11 @@
 <form method="post" action="customerHistory.php">
         <button type="submit" class="btn btn-danger common"><h3>Customer History</h3></button>
 </form>
+<br>
+<form method="post" action="productHistory.php">
+        <button type="submit" class="btn btn-primary common"><h3>Product History</h3></button>
+</form>
+<br>
 </div>
 <div class="sub">
 <form method="post" action="addCredit.php">
@@ -56,15 +62,15 @@
 </form>
 <br>
 <form method="post" action="billCancellation.php">
-        <button type="submit" class="btn btn-success common"><h3>Bill Cancellation</h3></button>
+        <button type="submit" class="btn btn-primary common"><h3>Bill Cancellation</h3></button>
 </form>
 <br>
 <form method="post" action="addProduct.php">
         <button type="submit" class="btn btn-warning common"><h3>Add Product</h3></button>
 </form>
 <br>
-<form method="post" action="productHistory.php">
-        <button type="submit" class="btn btn-primary common"><h3>Product History</h3></button>
+<form method="post" action="">
+        <button type="submit" class="btn btn-success common"><h3>Query</h3></button>
 </form>
 <br>
 </div>
