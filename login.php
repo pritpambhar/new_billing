@@ -1,7 +1,6 @@
 <?php
-	ob_start();
-	include("includes/sidebar.php"); 
-	include("includes/database.php");
+ 	ob_start();
+  	include("includes/database.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +8,6 @@
 	<title>Sachin Enterprise</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
 <!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 <!--===============================================================================================-->
@@ -34,54 +32,64 @@
 <!--===============================================================================================-->
 </head>
 <body>
-
-
 	<div class="container-contact100">
 		<div class="wrap-contact100">
 
-					<form method="post" action="viewProduct.php">
-                        <button type="submit" style="margin-left: 200px; margin-bottom: 35px; width: 200px;" class="btn btn-success">View Product</button>
-                    </form>
 
-			<form class="contact100-form validate-form" method="post" action="">
+			<form class="contact100-form validate-form" action="" method="post">
 				<span class="contact100-form-title">
-					ADD PRODUCT
+					LOGIN
 				</span>
-					
-				<label class="label-input100"><b>PRODUCT NAME</b></label>
-				<div class="wrap-input100 validate-input">
-					<input id="product_name" class="input100 border border-secondary" type="name" name="product_name" placeholder="enter product name" required="required">
+
+
+				<label class="label-input100"><b>Email</b></label>
+				<div class="wrap-input100">
+					<input id="email" class="input100 border border-secondary" type="email" name="email" placeholder="Enter Email" required="required">
+					<span class="focus-input100"></span>
+				</div>
+
+				<label class="label-input100"><b>Password</b></label>
+				<div class="wrap-input100">
+					<input id="password" class="input100 border border-secondary" type="password" name="password" placeholder="Enter Password" required="required">
 					<span class="focus-input100"></span>
 				</div>
 
 
 				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn" id="add-product" name="add-product">
+					<button class="contact100-form-btn" id="login" name="login">
 						<span>
-							ADD PRODUCT
+							LOGIN
 							<i class="zmdi zmdi-arrow-right m-l-8"></i>
 						</span>
 					</button>
 				</div>
+
 			</form>
 		</div>
 	</div>
 
-	<?php
-	if(isset($_POST["add-product"]))
+<?php 
+	if(isset($_POST["login"]))
 	{
-		$add_product=mysqli_query($con,"insert into product_master (product_name) values ('".$_POST["product_name"]."')");
-		if($add_product)
+		$login=mysqli_query($con,"select * from user where email='".$_POST["email"]."' and password='".$_POST["password"]."'");
+		$login_fetch=mysqli_fetch_assoc($login);
+
+		if($login_fetch)
 		{
+			session_start();
+			$_SESSION["auth"]=true;
 			header("location:index.php");
 		}
 		else
 		{
-			echo "failed to add new product";
+			echo '<script language="javascript">';
+			echo 'alert("invalid email or password");';
+			echo '</script>';
 		}
 	}
-	ob_end_flush();
-	?>
+?>
+<?php ob_end_flush();?>
+
 
 <!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>

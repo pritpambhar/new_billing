@@ -66,7 +66,6 @@ body {
   <a href="billCancellation.php" class="btn btn-warning">Bill Cancellation</a>
   <a href="addProduct.php" class="btn btn-danger">Add Product</a>
   <a href="productHistory.php" class="btn btn-primary">Product History</a>
-  <a href="" class="btn btn-success">Query</a>
 </div>
 
 <div id="main">

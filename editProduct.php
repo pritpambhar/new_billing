@@ -1,7 +1,13 @@
 <?php
-	ob_start();
-	include("includes/sidebar.php"); 
-	include("includes/database.php");
+ 	ob_start();
+  	include("includes/sidebar.php");
+  	include("includes/database.php");
+?>
+<?php
+
+	$product_fetch=mysqli_query($con,"select * from product_master where product_id='".$_GET["id"]."'");
+	$product=mysqli_fetch_assoc($product_fetch);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,27 +44,23 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-
-					<form method="post" action="viewProduct.php">
-                        <button type="submit" style="margin-left: 200px; margin-bottom: 35px; width: 200px;" class="btn btn-success">View Product</button>
-                    </form>
-
 			<form class="contact100-form validate-form" method="post" action="">
 				<span class="contact100-form-title">
-					ADD PRODUCT
+					VIEW PRODUCT
 				</span>
 					
 				<label class="label-input100"><b>PRODUCT NAME</b></label>
 				<div class="wrap-input100 validate-input">
-					<input id="product_name" class="input100 border border-secondary" type="name" name="product_name" placeholder="enter product name" required="required">
+					<input id="product_name" class="input100 border border-secondary" type="name" name="product_name" placeholder="enter product name" required="required" value="<?php echo $product["product_name"]; ?>">
 					<span class="focus-input100"></span>
 				</div>
 
+				<input type="hidden" name="id" value="<?php echo $_GET["id"]; ?>">
 
 				<div class="container-contact100-form-btn">
 					<button class="contact100-form-btn" id="add-product" name="add-product">
 						<span>
-							ADD PRODUCT
+							SUBMIT
 							<i class="zmdi zmdi-arrow-right m-l-8"></i>
 						</span>
 					</button>
@@ -70,14 +72,14 @@
 	<?php
 	if(isset($_POST["add-product"]))
 	{
-		$add_product=mysqli_query($con,"insert into product_master (product_name) values ('".$_POST["product_name"]."')");
+		$add_product=mysqli_query($con,"update product_master set product_name='".$_POST["product_name"]."' where product_id='".$_POST["id"]."'");
 		if($add_product)
 		{
-			header("location:index.php");
+			header("location:addProduct.php");
 		}
 		else
 		{
-			echo "failed to add new product";
+			echo "failed to edit product";
 		}
 	}
 	ob_end_flush();

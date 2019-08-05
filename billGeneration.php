@@ -37,7 +37,10 @@
 		<div class="wrap-contact100">
 
 					<form method="post" action="addCustomer.php">
-                        <button type="submit" style="margin-left: 220px;margin-bottom: 25px;" class="btn btn-success">Add New Customer</button>
+                        <button type="submit" style=" margin-left: 110px; width: 200px; float: left;" class="btn btn-success">Add New Customer</button>
+                    </form>
+                    <form method="post" action="editCustomer.php">
+                        <button type="submit" style="margin-right: 80px; margin-bottom: 35px; width: 200px; float: right;" class="btn btn-success">Edit Customer</button>
                     </form>
 
 

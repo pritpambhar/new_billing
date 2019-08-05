@@ -1,7 +1,20 @@
 <?php
-	ob_start();
-	include("includes/sidebar.php"); 
+ 	ob_start();
+	include("includes/sidebar.php");
 	include("includes/database.php");
+?>
+<?php 
+	$customer_fetch=mysqli_query($con,"select * from customer_master where customer_name='".$_POST["name"]."'");
+
+	if(mysqli_num_rows($customer_fetch)== 0)
+	{
+		echo "select proper Customer name";
+	}
+	else
+	{
+		$customer=mysqli_fetch_assoc($customer_fetch);
+	}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +22,8 @@
 	<title>Sachin Enterprise</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
 <!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 <!--===============================================================================================-->
@@ -38,27 +52,37 @@
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-
-					<form method="post" action="viewProduct.php">
-                        <button type="submit" style="margin-left: 200px; margin-bottom: 35px; width: 200px;" class="btn btn-success">View Product</button>
-                    </form>
-
-			<form class="contact100-form validate-form" method="post" action="">
+			<form class="contact100-form validate-form" method="post">
 				<span class="contact100-form-title">
-					ADD PRODUCT
+					EDIT CUSTOMER
 				</span>
-					
-				<label class="label-input100"><b>PRODUCT NAME</b></label>
+
+				<label class="label-input100"><b>Customer name *</b></label>
+				<div class="wrap-input100">
+					<input id="customer_name" class="input100 border border-secondary" type="text" name="customer_name" placeholder="enter name" required="required" value="<?php echo $customer["customer_name"]; ?>">
+					<span class="focus-input100"></span>
+				</div>
+
+				<label class="label-input100"><b>City *</b></label>
 				<div class="wrap-input100 validate-input">
-					<input id="product_name" class="input100 border border-secondary" type="name" name="product_name" placeholder="enter product name" required="required">
+					<input id="city" class="input100 border border-secondary" type="text" name="city" placeholder="enter city" required="required" value="<?php echo $customer["customer_city"]; ?>">
 					<span class="focus-input100"></span>
 				</div>
 
 
+
+				<label class="label-input100"><b>Phone Number</b></label>
+				<div class="wrap-input100">
+					<input id="mobile" class="input100 border border-secondary" type="text" name="mobile" placeholder="enter phone number" required="required" value="<?php echo $customer["customer_phone_no"]; ?>">
+					<span class="focus-input100"></span>
+				</div>
+
+					<input type="hidden" name="customer_id" value="<?php echo $customer["customer_id"]; ?>">
+
 				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn" id="add-product" name="add-product">
+					<button class="contact100-form-btn" id="edit-customer" name="edit-customer">
 						<span>
-							ADD PRODUCT
+							Submit
 							<i class="zmdi zmdi-arrow-right m-l-8"></i>
 						</span>
 					</button>
@@ -67,21 +91,22 @@
 		</div>
 	</div>
 
-	<?php
-	if(isset($_POST["add-product"]))
-	{
-		$add_product=mysqli_query($con,"insert into product_master (product_name) values ('".$_POST["product_name"]."')");
-		if($add_product)
-		{
-			header("location:index.php");
-		}
-		else
-		{
-			echo "failed to add new product";
-		}
-	}
-	ob_end_flush();
-	?>
+	 <!--form submition -->
+						<?php
+							if(isset($_POST["edit-customer"]))
+							{
+                                $editCustomer=mysqli_query($con,"update customer_master set customer_name='".$_POST["customer_name"]."',customer_city='".$_POST["city"]."',customer_phone_no='".$_POST["mobile"]."' where customer_id='".$_POST["customer_id"]."'");
+                                
+                                if($editCustomer)
+                                {
+                                   header("location:billGeneration.php");
+                                }
+                                else
+                                {
+                                    echo "customer not added successfully";
+                                }
+							}	
+						ob_end_flush();?>
 
 <!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>

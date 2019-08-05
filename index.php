@@ -2,6 +2,12 @@
         ob_start();
         include('includes/sidebar.php');
         include('includes/database.php');
+
+        session_start();
+        if($_SESSION["auth"] != true)
+        {
+                header("location:login.php");
+        }
 ?>        
 <html>
 <head>
