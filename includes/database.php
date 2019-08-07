@@ -1,3 +1,3 @@
 <?php 
-	$con=mysqli_connect("localhost","root","","account_esta");
+	$con=mysqli_connect("localhost","root","","new_account_esta");
 ?>

@@ -14,8 +14,11 @@
 ?>
 <?php
      if(isset($_POST["add-debit"]))
-     {
-        $transaction=mysqli_query($con,"insert into transaction_master (customer_id,transaction_date,credit) values ('".$_POST["id"]."',CURDATE(),'".$_POST["credit_amt"]."')");
+     {  
+        date_default_timezone_set('Asia/Kolkata');
+        $datee = date('Y-m-d H:i:s');
+            
+        $transaction=mysqli_query($con,"insert into transaction_master (customer_id,transaction_date,credit,created_on) values ('".$_POST["id"]."','".$datee."','".$_POST["credit_amt"]."','".$datee."')");
         //echo $transaction."";
         header("location:../index.php?debit=true");
      }

@@ -81,7 +81,10 @@
 						<?php
 							if(isset($_POST["add-customer"]))
 							{
-                                $addCustomer=mysqli_query($con,"insert into customer_master (customer_name,customer_city,customer_phone_no) values ('".$_POST["customer_name"]."','".$_POST["city"]."','".$_POST["mobile"]."')");
+							    date_default_timezone_set('Asia/Kolkata');
+                                $datee = date('Y-m-d H:i:s');
+            
+                                $addCustomer=mysqli_query($con,"insert into customer_master (customer_name,customer_city,customer_phone_no,created_on) values ('".$_POST["customer_name"]."','".$_POST["city"]."','".$_POST["mobile"]."','".$datee."')");
                                 
                                 if($addCustomer)
                                 {

@@ -158,20 +158,37 @@
         if(isset($_POST["submit"]))
         {
             //print_r($_POST);
+            $invoice_id_display;
 
             $customer_id_fetch=mysqli_query($con,"select customer_id from customer_master where customer_name='".$_POST["customer_name"]."'");
             $customer_id_row=mysqli_fetch_assoc($customer_id_fetch);
             $customer_id=$customer_id_row["customer_id"];
+
+            date_default_timezone_set('Asia/Kolkata');
+            $datee = date('Y-m-d H:i:s');
+
+            $invoice_last_row_id=mysqli_query($con,"SELECT invoice_id FROM invoice_master ORDER BY invoice_id DESC LIMIT 1");
+
+            if(mysqli_num_rows($invoice_last_row_id)==0)
+            {
+                $invoice_id_display=1;
+            }
+            else
+            {
+                $invoice_id_rs=mysqli_fetch_assoc($invoice_last_row_id);
+                $invoice_id_display=$invoice_id_rs["invoice_id"]+1;
+            }
         
-            $invoice=mysqli_query($con,"insert into invoice_master (customer_id,invoice_date,credit,debit) values ('".$customer_id."',CURDATE(),'".$_POST["credit"]."','".$_POST["debit"]."')");
+            $invoice=mysqli_query($con,"insert into invoice_master (invoice_id,customer_id,invoice_date,credit,debit,created_on) values ('".$invoice_id_display."','".$customer_id."','".$datee."','".$_POST["credit"]."','".$_POST["debit"]."','".$datee."')");
             
-            $last_id = mysqli_insert_id($con);
+            //$last_id = mysqli_insert_id($con);
+            $last_id_query=mysqli_query($con,"SELECT invoice_id FROM invoice_master ORDER BY invoice_id DESC LIMIT 1");
+            $last_id_fetch=mysqli_fetch_assoc($last_id_query);
+            $last_id=$last_id_fetch["invoice_id"];
 
             //echo $last_id;
             
             //$bill=mysqli_query($con,"insert into user_product_price (user_id) values ('".$last_id."')");
-            
-            
 
             $n=$_POST["number"];
 
@@ -184,7 +201,7 @@
 
                 $product_total=($_POST["qty".$i.""])*($_POST["price".$i.""]);
                 
-                $bill=mysqli_query($con,"insert into customer_bill_history (customer_id,product_id,bill_product_qty,bill_product_price,product_total,invoice_id,bill_date) values ('".$customer_id."','".$product_id."','".$_POST["qty".$i.""]."','".$_POST["price".$i.""]."','".$product_total."','".$last_id."',CURDATE())");   
+                $bill=mysqli_query($con,"insert into customer_bill_history (customer_id,product_id,bill_product_qty,bill_product_price,product_total,invoice_id,bill_date,created_on) values ('".$customer_id."','".$product_id."','".$_POST["qty".$i.""]."','".$_POST["price".$i.""]."','".$product_total."','".$last_id."','".$datee."','".$datee."')");   
                 
                // $rs=mysqli_query($con,"update  set product_".$_POST["product_".$i.""]." = '".$_POST["qty".$i.""]."' where user_id='".$last_id."'");
                // $rs2=mysqli_query($con,"update user_product_price set product_".$_POST["product_".$i.""]." = '".$_POST["price".$i.""]."' where user_id='".$last_id."'");

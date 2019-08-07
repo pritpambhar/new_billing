@@ -70,7 +70,10 @@
 	<?php
 	if(isset($_POST["add-product"]))
 	{
-		$add_product=mysqli_query($con,"insert into product_master (product_name) values ('".$_POST["product_name"]."')");
+		date_default_timezone_set('Asia/Kolkata');
+        $datee = date('Y-m-d H:i:s');
+            
+		$add_product=mysqli_query($con,"insert into product_master (product_name,created_on) values ('".$_POST["product_name"]."','".$datee."')");
 		if($add_product)
 		{
 			header("location:index.php");
