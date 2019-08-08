@@ -51,7 +51,7 @@
 
                 <label class="label-input100"><b>ENTER CREDIT</b></label>
                 <div class="wrap-input100">
-                    <input id="credit_amt" class="input100 border border-secondary" type="text" name="credit_amt" placeholder="enter name" required="required">
+                    <input id="credit_amt" class="input100 border border-secondary" type="text" name="credit_amt" placeholder="enter credit amount" required="required">
                     <span class="focus-input100"></span>
                 </div>
 

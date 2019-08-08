@@ -35,27 +35,49 @@
             <td><b>Date</b></td>
             <td><b>Opening</b></td>
             <td><b>Invoice Id</b></td>
-            <td><b>credit</b></td>
-            <td><b>debit</b></td>
-            <td><b>closing</b></td>
+            <td><b>Products</b></td>
+            <td><b>Debit</b></td>
+            <td><b>Credit</b></td>
+            <td><b>Closing</b></td>
         </tr>
         
         <?php 
         $closing=0;
         $opening=0;
+        $total_credit=0;
+        $total_debit=0;
         while($rs=mysqli_fetch_assoc($invoice))
         { 
             $closing = $closing + $rs["debit"] -$rs["credit"];  
 
             if($rs["date_b"]>=$_POST["from"] && $rs["date_b"]<=$_POST["to"])
             { 
+
+                $total_debit=$total_debit+$rs["debit"];
+                $total_credit=$total_credit+$rs["credit"];
              ?> 
+
                 <tr>
                     <td><?php echo $rs["date"]; ?></td>
                     <td><?php echo "<b>".$opening."</b>"; ?></td>
                     <td><?php echo $rs["invoice_id"]; ?></td>
-                    <td><?php echo $rs["credit"]; ?></td>
+                    <td>
+                        <?php 
+                            $product_details=mysqli_query($con,"select product_id,bill_product_qty from customer_bill_history where invoice_id='".$rs["invoice_id"]."'");
+                            while($fetch=mysqli_fetch_assoc($product_details))
+                            {
+                                 $product_name_details=mysqli_query($con,"select product_name from product_master where product_id='".$fetch["product_id"]."'");
+
+                                 while($inner_fetch=mysqli_fetch_assoc($product_name_details))
+                                {
+                                    echo $inner_fetch["product_name"]."&times;".$fetch["bill_product_qty"]." &nbsp ";
+                                }
+                            }
+
+                        ?>
+                    </td>
                     <td><?php echo $rs["debit"]; ?></td>
+                    <td><?php echo $rs["credit"]; ?></td>
                     <td><?php 
                         if($closing<0)
                         {
@@ -85,9 +107,14 @@
         } 
      ?>
      <tr>
-        <td colspan="5" align="right">
+        <td align="right">
             <b>TOTAL:</b>
         </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><?php echo "<b>".$total_debit."</b>"; ?></td>
+        <td><?php echo "<b>".$total_credit."</b>"; ?></td>
         <td>
             <b>
             <?php 
